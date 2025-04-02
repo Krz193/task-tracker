@@ -28,8 +28,11 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="container flex flex-row min-h-[200vh] w-100 relative">
+                <x-sidebar class="w-1/4 p-5 min-h-100 bg-white shadow static top-0 left-0"/>
+                <div class="flex-1 p-5 min-h-screen">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </body>
