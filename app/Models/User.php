@@ -25,6 +25,11 @@ class User extends Authenticatable
         'role' => UserRole::class,
     ];
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -16,4 +16,13 @@ class Task extends Model
     protected $casts = [
         'status' => TaskStatus::class,
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
