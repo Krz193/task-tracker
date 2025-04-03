@@ -23,7 +23,7 @@
                 <!-- Sidebar (selalu tampil di semua halaman) -->
                 <x-sidebar :projects="$projects" class="p-5 bg-white shadow sticky left-0 top-0" />
 
-                <div class="flex-1 p-5">
+                <div class="flex-1 py-5 px-8">
                     {{ $slot }}
                 </div>
             </main>

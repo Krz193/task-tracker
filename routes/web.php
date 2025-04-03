@@ -23,7 +23,7 @@ Route::middleware(['auth', 'verified', ProjectsList::class])->group(function() {
     Route::get('/project/{project}/edit', [ProjectController::class, 'edit'])->name('project.edit');
     Route::put('/project/{project}', [ProjectController::class, 'update'])->name('project.update');
 
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('project.destroy');
+    Route::delete('/project/{project}', [ProjectController::class, 'destroy'])->name('project.destroy');
 
     Route::prefix('tasks')->middleware(['auth'])->group(function() {
         Route::get('/tasks/create/{project}', [TaskController::class, 'create'])->name('tasks.create');

@@ -3,7 +3,7 @@
     --}}
 
     <div class="container flex flex-col w-full">
-        <div class="container flex flex-row justify-between items-center">
+        <div class="container flex flex-row justify-between items-center">               
             <h1 class="text-left block mb-4 text-xl font-semibold">{{ $project->project_name }}</h1>
             <div class="flex">
                 <button
@@ -31,13 +31,21 @@
                 </form>
             </div>
         </div>
-        <div class="container mb-4 mt-2">
-            <p>{{ $project->description }}</p>
+        <div class="container flex mb-4 mt-2">
+            <!-- Cek apakah proyek memiliki gambar -->
+            @if ($project->image)
+                <div class="mt-4">
+                    <img src="{{ asset('storage/' . $project->image) }}" alt="Project Image" class="w-full max-w-md rounded-lg shadow-md">
+                </div>
+            @endif
+            <p class="ps-{{ $project->image ? '5' : '0'}} py-2 pe-0 text-justify">
+                {{ $project->description }}
+            </p>
         </div>
-        <div class="card-container container p-3 flex flex-wrap gap-4">
+        <div class="card-container container mt-3 flex flex-wrap gap-4 justify-center">
             @forelse ($project->tasks as $task)
             <div
-                class="flex flex-col justify-between w-full sm:w-[48%] p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+                class="flex flex-col justify-between w-full sm:w-[49%] p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
 
                 <div class="container">
                     <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ $task->task_name }}</h2>
@@ -88,7 +96,7 @@
                             .text()
                             .then(text => {
                                 throw new Error(text);
-                            }); // Tangani HTML error Laravel
+                            });
                     }
                     return response.json();
                 })
