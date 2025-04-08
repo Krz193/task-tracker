@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRole;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +19,8 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::where('role', '!=', UserRole::ADMIN->value)
+            ->inRandomOrder()->first()?->id,
             'project_name' => $this->faker->sentence(3), // Nama proyek
             'description' => $this->faker->paragraph(),  // Deskripsi proyek
         ];

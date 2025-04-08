@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
-
         return view('dashboard', compact('projects'));
     }
 
