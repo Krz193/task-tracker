@@ -16,14 +16,14 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            {{-- @include('layouts.navigation') --}}
 
             <!-- Page Content -->
             <main class="container flex flex-row w-full static h-screen">
                 <!-- Sidebar (selalu tampil di semua halaman) -->
                 <x-sidebar :projects="$projects" class="p-5 bg-white shadow sticky left-0 top-0" />
 
-                <div class="flex-1 py-5 px-8">
+                <div class="flex-1 py-5 px-8 overflow-y-auto">
                     {{ $slot }}
                 </div>
             </main>
