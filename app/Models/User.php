@@ -22,12 +22,13 @@ class User extends Authenticatable
     protected $guarded = [];
 
     protected $casts = [
+        'email_verified_at' => 'datetime',
         'role' => UserRole::class,
     ];
 
-    public function tasks()
+    public function projects()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Project::class);
     }
 
     /**
