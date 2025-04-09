@@ -10,6 +10,8 @@
             
             <span>dashboard</span>
         </a>
+
+        @admin
         <a href="{{ route('users.index') }}"
         class="px-5 py-3 capitalize border-2 border-gray-300 bg-gray-50 hover:bg-gray-200 w-full rounded-lg flex items-center gap-2">
             <svg class="w-[24px] h-[24px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -18,6 +20,7 @@
             
             <span>users</span>
         </a>
+        @endadmin
     </div>
 
     {{-- sidebar body --}}

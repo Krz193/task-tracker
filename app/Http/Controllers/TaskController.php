@@ -38,14 +38,12 @@ class TaskController extends Controller
         $request->validate([
             'task_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'nullable|string',
         ]);
 
         $project->tasks()->create([
             'task_name' => $request->task_name,
             'description' => $request->description,
             'status' => TaskStatus::TODO,
-            'user_id' => Auth::id(), 
         ]);
 
         return redirect()->route('project.index', $project->id)->with('success', 'Task added successfully.');

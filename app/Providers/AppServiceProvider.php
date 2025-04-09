@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Enums\UserRole;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
             $user = Auth::user();
             $projects = $user ? Project::where('user_id', $user->id)->get() : collect();
             $view->with('projects', $projects);
+        });
+
+        
+        Blade::if('admin', function () {
+            return Auth::check() && Auth::user()->role === UserRole::ADMIN;
         });
     }
 }

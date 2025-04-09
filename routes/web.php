@@ -32,8 +32,8 @@ Route::middleware(['auth', 'verified', ProjectsList::class])->group(function() {
         Route::post('/store/{project}', [TaskController::class, 'store'])->name('tasks.store');
         Route::get('/edit/{task}', [TaskController::class, 'edit'])->name('tasks.edit');
         Route::put('/update/{task}', [TaskController::class, 'update'])->name('tasks.update');
-        Route::delete('/delete/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
         Route::put('/update-status/{task}', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+        Route::delete('/delete/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     });
 });
 
