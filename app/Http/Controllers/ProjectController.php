@@ -29,6 +29,7 @@ class ProjectController extends Controller
         ]);
 
         $data = $request->only(['project_name', 'description']);
+        $data['user_id'] = Auth::id();
 
         // Upload gambar jika ada
         if ($request->hasFile('image')) {

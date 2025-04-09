@@ -103,7 +103,7 @@
                     </div>
 
                     <!-- Dropdown untuk mengubah status -->
-                    <div class="card-footer">
+                    <div class="card-footer flex justify-between gap-4">
 
                         {{-- Function untuk mengatur warna Dropdown sesuai status --}}
                         @php
@@ -115,24 +115,53 @@
                             };
                         @endphp
 
-                        <label
-                            for="status-{{ $task->id }}"
-                            class="block mb-2 text-sm font-medium text-gray-900">Status:</label>
-                        <select
-                            id="status-{{ $task->id }}"
-                            class="{{ $statusClass }}
-                            border text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5"
-                            data-url="{{ route('tasks.updateStatus', $task->id) }}"
-                            onchange="updateStatus(this)">
-                            @foreach (\App\Enums\TaskStatus::cases() as $status)
-                            <option
-                                class="bg-gray-50"
-                                value="{{ $status->value }}"
-                                {{ ($task->status->value ?? '') === $status->value ? 'selected' : '' }}>
-                                {{ ucfirst(str_replace('_', ' ', $status->value)) }}
-                            </option>
-                            @endforeach
-                        </select>
+                        <div class="status flex-1">
+                            <label
+                                for="status-{{ $task->id }}"
+                                class="block mb-2 text-sm font-medium text-gray-900">Status:</label>
+                            <select
+                                id="status-{{ $task->id }}"
+                                class="{{ $statusClass }}
+                                border text-gray-900 text-sm rounded-lg focus:border-blue-500 block w-full p-2.5"
+                                data-url="{{ route('tasks.updateStatus', $task->id) }}"
+                                onchange="updateStatus(this)">
+                                @foreach (\App\Enums\TaskStatus::cases() as $status)
+                                <option
+                                    class="bg-gray-50"
+                                    value="{{ $status->value }}"
+                                    {{ ($task->status->value ?? '') === $status->value ? 'selected' : '' }}>
+                                    {{ ucfirst(str_replace('_', ' ', $status->value)) }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="action self-end">
+                            <form
+                                action="{{ route('tasks.destroy', $task) }}"
+                                method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete {{ $task->task_name }}?');">
+                                @csrf @method('DELETE')
+                                <button
+                                    type="submit"
+                                    class="capitalize border border-red-900 flex items-center text-white bg-red-700 hover:bg-red-800 rounded-lg text-center py-2 px-4   ">
+                                    {{-- svg icon trashbin --}}
+                                    <svg
+                                        class="w-6 h-6"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                            clip-rule="evenodd"/>
+                                    </svg>
+                                    {{-- <span>Delete</span> --}}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 @empty
