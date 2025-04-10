@@ -34,11 +34,12 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
         ]);
 
         $validated['role'] = UserRole::TEAM_MEMBER;
         $validated['password'] = bcrypt($validated['password']);
+
         User::create($validated);
 
         return redirect()->route('users.index')->with('success', 'User created.');

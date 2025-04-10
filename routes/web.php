@@ -15,10 +15,10 @@ Route::get('/dashboard', function () {
 
 Route::get(
     '/', [DashboardController::class, 'index']
-)->middleware(['auth', 'verified', ProjectsList::class])->name('dashboard');
+)->middleware(['auth', ProjectsList::class])->name('dashboard');
 
-Route::middleware(['auth', 'verified', ProjectsList::class])->group(function() {
-    Route::prefix('project')->middleware(['auth'])->group(function() {
+Route::middleware(['auth', ProjectsList::class])->group(function() {
+    Route::prefix('project')->group(function() {
         Route::get('/{id}', [ProjectController::class, 'find'])->name('project.index');
         Route::get('/', function() { return view('form_project'); })->name('project.store');
         Route::post('/', [ProjectController::class, 'store'])->name('project.store');
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified', ProjectsList::class])->group(function() {
         Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('project.destroy');
     });
 
-    Route::prefix('tasks')->middleware(['auth'])->group(function() {
+    Route::prefix('tasks')->group(function() {
         Route::get('/create/{project}', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/store/{project}', [TaskController::class, 'store'])->name('tasks.store');
         Route::get('/edit/{task}', [TaskController::class, 'edit'])->name('tasks.edit');
@@ -35,14 +35,21 @@ Route::middleware(['auth', 'verified', ProjectsList::class])->group(function() {
         Route::put('/update-status/{task}', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
         Route::delete('/delete/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     });
+
+    Route::middleware(['role:admin'])->group(function() {
+        Route::resource('users', UserController::class);
+    });
 });
 
-Route::resource('users', UserController::class);
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/test-alert', function () {
+    session()->flash('success', 'Test alert muncul!');
+    return view('welcome'); // atau view lain yang pakai layout sama
 });
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
