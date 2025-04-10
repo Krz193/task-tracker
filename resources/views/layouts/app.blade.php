@@ -10,16 +10,36 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
+        @php
+            $types = ['success', 'error', 'warning', 'info'];
+        @endphp
+
+        <div class="alert-container flex w-full top-3 space-y-3 items-center absolute flex-col z-50">
+        @foreach ($types as $type)
+            @if (session($type))
+                <x-alert :type="$type" :message="session($type)" />
+            @endif
+        @endforeach
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <x-alert type="error" :message="$error" />
+            @endforeach
+        @endif
+        </div>
+
+
         <div class="min-h-screen bg-gray-100">
             {{-- @include('layouts.navigation') --}}
 
             <!-- Page Content -->
-            <main class="container flex flex-row w-full static h-screen">
+            <main class="container flex flex-row w-full h-screen">
                 <!-- Sidebar (selalu tampil di semua halaman) -->
                 <x-sidebar :projects="$projects" class="p-5 bg-white shadow sticky left-0 top-0" />
 

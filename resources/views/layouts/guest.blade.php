@@ -15,6 +15,17 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
+        @php
+            $types = ['success', 'error', 'warning', 'info'];
+        @endphp
+
+        <div class="alert-container flex w-full mt-3 gap-2 justify-center fixed flex-col">
+        @foreach ($types as $type)
+            @if (session($type))
+                <x-alert :type="$type" :message="session($type)" />
+            @endif
+        @endforeach
+        </div>
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">

@@ -4,5 +4,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    @keyframes slide-in {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slide-out {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+
+    .animate-slide-in {
+        animation: slide-in 0.4s ease-out forwards;
+    }
+
+    .animate-slide-out {
+        animation: slide-out 0.3s ease-in forwards;
+    }
+}
+
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
