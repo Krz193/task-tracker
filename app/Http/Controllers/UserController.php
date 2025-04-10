@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('role', '!=', UserRole::ADMIN)->get();
         return view('users', compact('users'));
     }
 
