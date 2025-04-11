@@ -216,7 +216,7 @@
             })
             .then(data => {
                 // Toast atau alert
-                alert(data.message);
+                // alert(data.message);
 
                 console.log(data.status);
     
