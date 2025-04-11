@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('discord_id')->nullable()->unique()->after('id');
-            $table->string('avatar')->nullable()->after('email');
-            $table->string('username')->nullable()->after('name'); // Username Discord (optional)
-            $table->string('token')->nullable()->after('password'); // OAuth token
-            $table->string('refresh_token')->nullable()->after('token'); // Refresh token
-            $table->timestamp('token_expires_at')->nullable()->after('refresh_token');
+            $table->string('discord_avatar')->nullable()->after('email');
+            $table->string('discord_username')->nullable()->after('name'); // Username Discord (optional)
+            $table->string('discord_token')->nullable()->after('password'); // OAuth token
+            $table->string('discord_refresh_token')->nullable()->after('discord_token'); // Refresh token
+            $table->timestamp('discord_token_expires_at')->nullable()->after('discord_refresh_token');
         });
     }
 
@@ -29,11 +29,11 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
                 'discord_id',
-                'avatar',
-                'username',
-                'token',
-                'refresh_token',
-                'token_expires_at',
+                'discord_avatar',
+                'discord_username',
+                'discord_token',
+                'discord_refresh_token',
+                'discord_token_expires_at',
             ]);
         });
     }    
