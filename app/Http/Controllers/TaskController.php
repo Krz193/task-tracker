@@ -57,7 +57,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', compact('task'));
+        $project = $task->project;
+        return view('form_task', compact(['task', 'project']));
     }
 
     /**
@@ -77,7 +78,7 @@ class TaskController extends Controller
 
         $task->update($request->all());
 
-        return redirect()->route('project.show', $task->project_id)->with('success', 'Task updated successfully.');
+        return redirect()->route('project.index', $task->project_id)->with('success', 'Task updated successfully.');
     }
 
     /**
