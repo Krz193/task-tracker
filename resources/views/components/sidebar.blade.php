@@ -67,26 +67,33 @@
                 </div>
             </button>
             @empty
-            <p>{{ __('belum ada project.') }}</p>
+            <p>{{ __(ucfirst('belum ada project.')) }}</p>
             @endforelse
         </div>
     </div>
 
     {{-- sidebar footer --}}
     <div class="container flex h-[50px] items-center">
-        <span class="flex-1">
-            {{ Auth::user()->name }}
+        <span class="flex items-center gap-2 flex-1">
+            {{-- section user discord --}}
+            @if (Auth::user()->discord_id)  
+            <img class="w-9 rounded-full"
+                src="{{ Auth::user()->discord_avatar }}"
+                alt="{{ Auth::user()->name }} Avatar">
+            @endif
+            <h1 class="text-lg font-semibold leading-none">
+                {{ ucfirst(Auth::user()->name) }}
+            </h1>
         </span>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit"
-                class="px-4 py-2 capitalize text-center border-2 border-red-400 bg-red-100 hover:bg-red-300 rounded-lg flex items-center gap-2 w-full">
-                <svg class="w-6 h-6 text-gray-800 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" fill="none" viewBox="0 0 24 24">
+                class="px-4 py-1 capitalize text-center border-2 border-red-400 bg-red-100 hover:bg-red-300 rounded-lg flex items-center gap-2 w-full">
+                <svg class="w-6 h-6 text-gray-800 rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
                 </svg>
-                <span>logout</span>
+                <span class="font-normal">logout</span>
             </button>
         </form>
     </div>

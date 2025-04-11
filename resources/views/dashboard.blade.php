@@ -49,13 +49,21 @@
 
     @else
     {{-- dashboard user --}}
+
+    {{-- {{ dd(auth()->user()) }} --}}
+    {{-- {{ dd($data) }} --}}
+
     <blockquote class="text-3xl capitalize italic font-bold text-gray-900 mb-2">
         <p>
             {{ $data->quote }}.
         </p>
     </blockquote>
     <h3 class="mb-5 text-xl">
-        {{ __(ucfirst(strtolower("you have done $data->tasksPercentage% of your tasks"))) }},
+        @if ($data->totalProjects>0)
+            {{ __(ucfirst(strtolower("you have done $data->tasksPercentage% of your tasks,"))) }}
+        @else
+            {{ __(ucfirst("let's start adding your projects,")) }}
+        @endif
         <span class="italic">
             @php
                 $quote = ($data->tasksPercentage>75) 
@@ -99,11 +107,13 @@
                 Top project
             </h1>
             <p class="font-normal text-gray-700 text-end">
-                {{ $data->topProject->project_name }} 
+                {{ $data->topProject->project_name ?? ucfirst('belum ada project.') }} 
+                @if ($data->topProject)
                 <span>
                     ({{ $data->topProject->tasks_done }}
                     task{{ ($data->topProject->tasks_done>1 ? 's' : '') }} done)
                 </span>
+                @endif
             </p>
         </div>
     </div>
