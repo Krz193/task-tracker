@@ -19,20 +19,13 @@
             $types = ['success', 'error', 'warning', 'info'];
         @endphp
 
-        <div class="alert-container flex w-full top-3 space-y-3 items-center absolute flex-col z-50">
-            @foreach ($types as $type)
-                @if (session($type))
-                    <x-alert :type="$type" :message="session($type)" />
-                @endif
-            @endforeach
-
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <x-alert type="error" :message="$error" />
-                @endforeach
+        <div class="alert-container flex w-full mt-3 gap-2 justify-center fixed flex-col">
+        @foreach ($types as $type)
+            @if (session($type))
+                <x-alert :type="$type" :message="session($type)" />
             @endif
+        @endforeach
         </div>
-        
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
