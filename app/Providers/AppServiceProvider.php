@@ -26,8 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // URL::forceHttps();
-        // URL::forceScheme('https');
+        if (env('APP_ENV') !== 'local') {
+            URL::forceScheme('https');
+        }
 
         View::composer('layouts.app', function ($view) {
             $user = Auth::user();
