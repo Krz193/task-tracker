@@ -1,21 +1,48 @@
 <x-app-layout>
-    <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">Add Task to {{ $project->project_name }}</h1>
-        
-        <form action="{{ route('tasks.store', $project->id) }}" method="POST">
-            @csrf
+    {{-- {{ dd($project) }} --}}
+    <div class="container flex flex-col items-center">
+        <div class="justify-center w-full">
+            <h1 class="text-left block mb-4 text-xl font-semibold">
+                {{ ucfirst(isset($task) ? "edit task $task->task_name in $project->project_name" : "add task to $project->project_name") }}
+            </h1>
+        </div>
+
+        <form
+            action="{{ isset($task) ? route('tasks.update', $task) : route('tasks.store') }}"
+            method="POST"
+            class="flex flex-col w-[70%]"
+            enctype="multipart/form-data">
+            @csrf @if(isset($task)) @method('PUT') @endif
+
+            <!-- Name -->
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Task Name</label>
-                <input type="text" name="task_name" required class="w-full p-2 border rounded">
+                <label for="task_name" class="block text-sm font-medium text-gray-700">{{ ucfirst('task name') }}</label>
+                <input
+                    type="text"
+                    id="task_name"
+                    name="task_name"
+                    value="{{ isset($task) ? $task->task_name : old('task_name') }}"
+                    required="required"
+                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
             </div>
 
+            <!-- Description -->
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700">Description</label>
-                <textarea name="description" class="w-full p-2 border rounded"></textarea>
+                <label for="description" class="block text-sm font-medium text-gray-700">{{ ucfirst('description') }}</label>
+                <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    value="{{ isset($task) ? $task->description : old('description') }}"
+                    required="required"
+                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
             </div>
 
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-                Save Task
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                {{ isset($task) ? 'Update' : 'Add' }}
             </button>
         </form>
     </div>
