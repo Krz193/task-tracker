@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Middleware\ProjectsList;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DashboardController;
@@ -16,6 +18,12 @@ Route::get('/dashboard', function () {
 Route::get(
     '/', [DashboardController::class, 'index']
 )->middleware(['auth', ProjectsList::class])->name('dashboard');
+
+Route::get('/auth/discord', [SocialiteController::class, 'redirectToDiscord'])
+->name('discord.login');
+Route::get('/auth/discord/callback', [SocialiteController::class, 'handleDiscordCallback'])
+->name('discord.callback');
+
 
 Route::middleware(['auth', ProjectsList::class])->group(function() {
     Route::prefix('project')->group(function() {
